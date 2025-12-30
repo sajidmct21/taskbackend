@@ -41,41 +41,87 @@
 
 
 
+// import express from "express";
+// import env from "dotenv";
+// import cors from "cors";
+
+// import userRouter from "../routes/user.router.js";
+// import taskRouter from "../routes/task.router.js";
+// import dbConnection from "../dbconnection/dbConnection.js";
+
+// env.config();
+
+// const app = express();
+
+// // Middlewares
+// app.use(cors());
+// app.use(express.json());
+
+// // Routes
+// app.use("/api/v1", userRouter);
+// app.use("/api/v2", taskRouter);
+
+// // Health check (optional but recommended)
+// app.get("/", (req, res) => {
+//   res.send("Task Management Backend running on Vercel 🚀");
+// });
+
+// // Global Error Handler
+// app.use((err, req, res, next) => {
+//   res.status(err.statusCode || 500).json({
+//     statusCode: err.statusCode || 500,
+//     name: err.name,
+//     message: err.message,
+//     stack: process.env.NODE_ENV === "production" ? null : err.stack
+//   });
+// });
+
+// // 🔴 IMPORTANT FOR VERCEL
+// dbConnection();
+// export default app;
+
+
+
 import express from "express";
 import env from "dotenv";
 import cors from "cors";
-
+import dbConnection from "../dbconnection/dbConnection.js";
 import userRouter from "../routes/user.router.js";
 import taskRouter from "../routes/task.router.js";
-import dbConnection from "../dbconnection/dbConnection.js";
+import { createServer } from "http";
+import { VercelRequest, VercelResponse } from "@vercel/node";
 
 env.config();
 
 const app = express();
-
-// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Routes
 app.use("/api/v1", userRouter);
 app.use("/api/v2", taskRouter);
 
-// Health check (optional but recommended)
 app.get("/", (req, res) => {
   res.send("Task Management Backend running on Vercel 🚀");
 });
 
-// Global Error Handler
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).json({
     statusCode: err.statusCode || 500,
     name: err.name,
     message: err.message,
-    stack: process.env.NODE_ENV === "production" ? null : err.stack
+    stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
 });
 
-// 🔴 IMPORTANT FOR VERCEL
-dbConnection();
-export default app;
+// ✅ Serverless handler
+import { VercelRequest, VercelResponse } from "@vercel/node";
+
+export default async function handler(req, res) {
+  try {
+    await dbConnection(); // ensure DB is connected
+    app(req, res);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+}
