@@ -13,9 +13,9 @@ app.use(cors());
 // Middlewares
 app.use(express.json());
 
-app.use("/", (req, res) => {
-  res.send(`Hello from backend and TaskDB`);
-});
+// app.use("/", (req, res) => {
+//   res.send(`Hello from backend and TaskDB`);
+// });
 
 app.use("/api/v1", userRuter);
 // app.use('/api/v2',verifyToken,taskRouter)
