@@ -8,7 +8,20 @@ import dbConnection from "./dbconnection/dbConnection.js";
 
 const app = express();
 env.config();
-app.use(cors());
+// app.use(cors());
+import cors from "cors";
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://your-frontend-domain.vercel.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+}));
+
+app.options("*", cors());
+
 
 // Middlewares
 app.use(express.json());
