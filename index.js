@@ -9,7 +9,6 @@ import dbConnection from "./dbconnection/dbConnection.js";
 const app = express();
 env.config();
 // app.use(cors());
-import cors from "cors";
 
 app.use(cors({
   origin: [
