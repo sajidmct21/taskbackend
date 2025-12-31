@@ -11,10 +11,7 @@ env.config();
 // app.use(cors());
 
 app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://your-frontend-domain.vercel.app"
-  ],
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
