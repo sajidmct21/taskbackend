@@ -158,11 +158,11 @@ export const updateCompleteTask = asyncHandler(async (req, res, next) => {
   }
   const completeTask = taskData.complete;
   console.log(completeTask);
-  await Task.findByIdAndUpdate(id, {
+  const response =await Task.findByIdAndUpdate(id, {
     ...completeTask,
     complete: !completeTask,
   });
-  res.status(200).json(new ApiResponse(200, "Task is updated", completeTask));
+  res.status(200).json(new ApiResponse(200, "Task is updated", response));
 });
 
 // export const updateCompleteTask = asyncHandler(async (req, res) => {
