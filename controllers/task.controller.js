@@ -147,39 +147,39 @@ export const updateImportantTask = asyncHandler(async (req, res, next) => {
 });
 
 // update complete Task
-// export const updateCompleteTask = asyncHandler(async (req, res, next) => {
-//   const { id } = req.params;
-//   if (!id) {
-//     throw new ApiError(400, "Id is required");
-//   }
-//   const taskData = await Task.findById(id);
-//   if (!taskData) {
-//     throw new ApiError(404, "Task not found");
-//   }
-//   const completeTask = taskData.complete;
-//   await Task.findByIdAndUpdate(id, {
-//     ...completeTask,
-//     complete: !completeTask,
-//   });
-//   res.status(200).json(new ApiResponse(200, "Task is updated", completeTask));
-// });
-
-export const updateCompleteTask = asyncHandler(async (req, res) => {
+export const updateCompleteTask = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-
   if (!id) {
     throw new ApiError(400, "Id is required");
   }
-
-  const task = await Task.findById(id);
-  if (!task) {
+  const taskData = await Task.findById(id);
+  if (!taskData) {
     throw new ApiError(404, "Task not found");
   }
-
-  task.complete = !task.complete;
-  await task.save();
-
-  res.status(200).json(
-    new ApiResponse(200, "Task is updated", task)
-  );
+  const completeTask = taskData.complete;
+  await Task.findByIdAndUpdate(id, {
+    ...completeTask,
+    complete: !completeTask,
+  });
+  res.status(200).json(new ApiResponse(200, "Task is updated", completeTask));
 });
+
+// export const updateCompleteTask = asyncHandler(async (req, res) => {
+//   const { id } = req.params;
+
+//   if (!id) {
+//     throw new ApiError(400, "Id is required");
+//   }
+
+//   const task = await Task.findById(id);
+//   if (!task) {
+//     throw new ApiError(404, "Task not found");
+//   }
+
+//   task.complete = !task.complete;
+//   await task.save();
+
+//   res.status(200).json(
+//     new ApiResponse(200, "Task is updated", task)
+//   );
+// });
