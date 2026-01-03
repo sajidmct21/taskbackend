@@ -157,6 +157,7 @@ export const updateCompleteTask = asyncHandler(async (req, res, next) => {
     throw new ApiError(404, "Task not found");
   }
   const completeTask = taskData.complete;
+  console.log(completeTask);
   await Task.findByIdAndUpdate(id, {
     ...completeTask,
     complete: !completeTask,
