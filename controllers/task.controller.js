@@ -161,7 +161,7 @@ export const updateCompleteTask = asyncHandler(async (req, res, next) => {
   //   ...completeTask,
   //   complete: !completeTask,
   // });
-  res.status(200).json(new ApiResponse(200, "Task is updated", completeTask));
+  res.status(200).json(new ApiResponse(200, "Task is updated", {name:"Sajid"}));
 });
 
 // export const updateCompleteTask = asyncHandler(async (req, res) => {
