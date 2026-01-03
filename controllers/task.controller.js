@@ -140,8 +140,8 @@ export const updateCompleteTask = asyncHandler(async(req, res, next)=>{
     if(!id){
         throw new ApiError(400,'Id is required')
     }
-    const taskData = Task.findById(id)
+    const taskData = await Task.findById(id)
     const completeTask = taskData.complete
-    await Task.findByIdAndUpdate(id,{complete:!completeTask})
-    res.status(200).json(new ApiResponse(200,'Task is updated', ''))
+    await Task.findByIdAndUpdate(id,{...completeTask,complete:!completeTask})
+    res.status(200).json(new ApiResponse(200,'Task is updated',completeTask))
 })
