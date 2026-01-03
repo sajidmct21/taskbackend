@@ -157,12 +157,11 @@ export const updateCompleteTask = asyncHandler(async (req, res, next) => {
     throw new ApiError(404, "Task not found");
   }
   const completeTask = taskData.complete;
-  console.log(completeTask);
-  const response =await Task.findByIdAndUpdate(id, {
-    ...completeTask,
-    complete: !completeTask,
-  });
-  res.status(200).json(new ApiResponse(200, "Task is updated", response));
+  // const response =await Task.findByIdAndUpdate(id, {
+  //   ...completeTask,
+  //   complete: !completeTask,
+  // });
+  res.status(200).json(new ApiResponse(200, "Task is updated", completeTask));
 });
 
 // export const updateCompleteTask = asyncHandler(async (req, res) => {
