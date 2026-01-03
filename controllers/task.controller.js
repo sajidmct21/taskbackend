@@ -143,7 +143,7 @@ export const updateImportantTask = asyncHandler(async (req, res, next) => {
   const taskData = await Task.findById(id);
   const impTask = taskData.important;
   const re =await Task.findByIdAndUpdate(id, { important: !impTask });
-  res.status(200).json(new ApiResponse(200, "Task is updated",re.data.important));
+  res.status(200).json(new ApiResponse(200, "Task is updated",re.data));
 });
 
 // update complete Task
