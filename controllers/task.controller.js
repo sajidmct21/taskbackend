@@ -142,8 +142,10 @@ export const updateImportantTask = asyncHandler(async (req, res, next) => {
   }
   const taskData = await Task.findById(id);
   const impTask = taskData.important;
-  const re =await Task.findByIdAndUpdate(id, { important: !impTask });
-  res.status(200).json(new ApiResponse(200, "Important Task is updated",re.data));
+  const re = await Task.findByIdAndUpdate(id, { important: !impTask },{ new: true });
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Important Task is updated", re));
 });
 
 // update complete Task
@@ -157,7 +159,7 @@ export const updateCompleteTask = asyncHandler(async (req, res, next) => {
     throw new ApiError(404, "Task not found");
   }
   const completeTask = taskData.complete;
-  const response =await Task.findByIdAndUpdate(id, {
+  const response = await Task.findByIdAndUpdate(id, {
     ...completeTask,
     complete: !completeTask,
   });
