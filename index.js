@@ -16,18 +16,18 @@ const allowedOrigins = [
   "https://taskfrontend-three.vercel.app"
 ];
 
-// app.use(cors({
-//   origin: function (origin, callback) {
-//     if (!origin || allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error("Not allowed by CORS"));
-//     }
-//   },
-//   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-//   credentials: true
-// }));
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 
 // app.use(cors({
 //   origin: true,
@@ -39,11 +39,7 @@ const allowedOrigins = [
 // app.options("*", cors());
 // app.use(express.json());
 
-app.use(cors({
-  origin: 'https://taskfrontend-three.vercel.app', // Allow only your frontend origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
-}));
+
 
 // Middlewares
 app.use(express.json());
